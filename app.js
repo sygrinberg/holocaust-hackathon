@@ -8,24 +8,18 @@ function add_auth_to_params_string(params) {
 function create_new_board() {
     // debugger;
     var url = "https://api.trello.com/1/boards";
-    var client = new XMLHttpRequest();
-    client.open("POST", url, false);
-    client.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    client.addEventListener("readystatechange", function () {
-        if (this.readyState === this.DONE) {
-            console.log(this.responseText);
-        }
-    });
-
-    var board_name = "surviver-name"; // no spaces! \ strip spaces
+    var board_name = "surviver name".split(' ').join('%20');
     var params = "name=" + board_name + "&defaultLabels=false&defaultLists=false&keepFromSource=none&prefs_permissionLevel=private&prefs_voting=disabled&prefs_comments=members&prefs_invitations=members&prefs_selfJoin=true&prefs_cardCovers=true&prefs_background=blue&prefs_cardAging=regular";
     params = add_auth_to_params_string(params);
 
-    client.send(params)
-}
+    var response = UrlFetchApp.fetch(url, {
+        method: 'POST',
+        contentType: 'application/x-www-form-urlencoded',
+        payload: params
+    });
+    console.log(response.getContentText());
+};
 
-// "main"
-console.log("creating new board");
-create_new_board();
-console.log("board created");
+function onFormSubmit() {
+    create_new_board()
+}
