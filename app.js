@@ -5,10 +5,10 @@ function add_auth_to_params_string(params) {
     return params + "&key=" + API_KEY + "&token=" + API_TOKEN;
 }
 
-function create_new_board() {
+function create_new_board(board_name) {
     // debugger;
     var url = "https://api.trello.com/1/boards";
-    var board_name = "surviver name".split(' ').join('%20');
+    board_name = board_name.split(' ').join('%20');
     var params = "name=" + board_name + "&defaultLabels=false&defaultLists=false&keepFromSource=none&prefs_permissionLevel=private&prefs_voting=disabled&prefs_comments=members&prefs_invitations=members&prefs_selfJoin=true&prefs_cardCovers=true&prefs_background=blue&prefs_cardAging=regular";
     params = add_auth_to_params_string(params);
 
@@ -18,8 +18,12 @@ function create_new_board() {
         payload: params
     });
     console.log(response.getContentText());
-};
+}
+
+function add_lists_to_board_request() {
+
+}
 
 function onFormSubmit() {
-    create_new_board()
+    create_new_board("surviver name2")
 }
